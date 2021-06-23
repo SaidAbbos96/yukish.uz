@@ -1,19 +1,16 @@
 <?
-function dump($what)
-{
-    echo '<pre>';
-    print_r($what);
+function dump($what){
+    echo '<pre>'; 
+        print_r($what); 
     echo '</pre>';
 };
 
-function get_data($url)
-{
+function get_data($url){
     return json_decode(file_get_contents($url), true);
 };
 
-function bot($method, $datas = [])
-{
-    $url = "https://api.telegram.org/bot" . API_KEY . "/" . $method;
+function bot($method, $datas = []){
+    $url = "https://api.telegram.org/bot".API_KEY."/" . $method;
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -23,27 +20,24 @@ function bot($method, $datas = [])
     if (!curl_error($ch)) return json_decode($res, true);
 };
 
-function html($text)
-{
-    return str_replace(['<', '>'], ['&#60;', '&#62;'], $text);
+function html($text){
+    return str_replace(['<','>'],['&#60;','&#62;'],$text);
 };
 
-function reformat($json)
-{
+function reformat($json){
     return json_encode(json_decode($json, true), JSON_PRETTY_PRINT);
 };
 
-function user_is_followed($user_id)
-{
+function user_is_followed($user_id){
     global $channels;
     $count = 0;
     $count_verf = 0;
-    foreach ($channels as $channel) {
-        if ($channel["required"] == 1) {
+    foreach ($channels as $channel){
+        if($channel["required"] == 1){
             $count++;
             $stss = ['creator', 'administrator', 'member'];
-            $res = get_data('https://api.telegram.org/bot' . API_KEY . '/getChatMember?chat_id=' . $channel["chan_id"] . '&user_id=' . $user_id)['result'];
-            if (in_array($res['status'], $stss)) {
+            $res = get_data('https://api.telegram.org/bot'.API_KEY.'/getChatMember?chat_id='.$channel["chan_id"].'&user_id=' . $user_id)['result'];
+            if(in_array($res['status'], $stss)){
                 $count_verf++;
             };
         };
@@ -51,12 +45,11 @@ function user_is_followed($user_id)
     return ($count_verf == $count) ? true : false;
 };
 
-function get_chans()
-{
+function get_chans(){
     global $channels;
     $list_channels = [];
-    foreach ($channels as $channel) {
-        $list_channels[][] = ['text' => $channel['btn_text'], 'url' => "https://t.me/" . $channel['username'] . ""];
+    foreach($channels as $channel){
+        $list_channels[][] = ['text' => $channel['btn_text'], 'url'=> "https://t.me/".$channel['username'].""];
     };
     array_push($list_channels, [
         [
@@ -66,49 +59,63 @@ function get_chans()
     ]);
     return $list_channels;
 };
-if ($logging) {
-    if (file_get_contents('php://input')) {
-        file_put_contents("log.json", reformat(file_get_contents('php://input')));
+if($logging){
+    if(file_get_contents('php://input')){
+        file_put_contents("log.json",reformat(file_get_contents('php://input')));
     };
+    
 };
 
-function bot_manager()
-{
-    if (isset($_GET['reset'])) {
+function bot_manager(){
+    if(isset($_GET['reset'])){
         $protokol = $_SERVER['REQUEST_SCHEME'];
-        if ($protokol != "https") {
+        if($protokol != "https"){
             echo "Xatolik, So'rov HTTPS protokolida bo'lishi shart !<br> SSl sertifekat kerak domainga !";
-        } else {
-            echo $webhook_url = "https://api.telegram.org/bot" . API_KEY . "/setWebHook?url=" . $protokol . "://" . $_SERVER['HTTP_HOST'] . "" . $_SERVER['SCRIPT_NAME'];
-            dump(json_decode(file_get_contents($webhook_url), true));
+        }else{
+            echo $webhook_url = "https://api.telegram.org/bot".API_KEY."/setWebHook?url=".$protokol."://".$_SERVER['HTTP_HOST']."".$_SERVER['SCRIPT_NAME'];
+            dump(json_decode(file_get_contents($webhook_url),true));
         };
-    } else if (isset($_GET['info'])) {
-        dump(json_decode(file_get_contents("https://api.telegram.org/bot" . API_KEY . "/getWebhookInfo"), true));
-    } else if (isset($_GET['kill'])) {
-        dump(json_decode(file_get_contents("https://api.telegram.org/bot" . API_KEY . "/deleteWebhook?drop_pending_updates=true"), true));
-    } else if (isset($_GET['test'])) {
+    }else if(isset($_GET['info'])){
+        dump(json_decode(file_get_contents("https://api.telegram.org/bot".API_KEY."/getWebhookInfo"),true));
+    }else if(isset($_GET['kill'])){
+        dump(json_decode(file_get_contents("https://api.telegram.org/bot".API_KEY."/deleteWebhook?drop_pending_updates=true"),true));
+    }else if(isset($_GET['test'])){
         global $Manager;
         $res = bot('sendmessage', [
             'chat_id' => $Manager,
             'text' => "Test xabar !",
             'parse_mode' => 'HTML'
         ]);
-        if ($res["ok"]) {
-            echo "Test Xabr yuborildi";
-        };
+        if($res["ok"]){echo "Test Xabr yuborildi";};
         dump($res);
     };
 };
 
-function test_url()
-{
+function test_url(){
     $res = explode("/", $_SERVER['SCRIPT_NAME']);
     $res[array_key_last($res)] = "app.php";
     $res = implode("/", $res);
-    return $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . "" . $res . "?test";
+    return $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."".$res."?test";
 };
 
-function db_conn_sqlite()
-{
-    echo "boir";
+function db_conn_sqlite(){
+    global $local_db_sqlite;
+    if($local_db_sqlite['status']){
+        if(!file_exists($local_db_sqlite['db_src'])){
+            $db = new SQLite3($local_db_sqlite['db_src']);
+            $db->exec("CREATE TABLE users (chatid INTEGER PRIMARY KEY UNIQUE, name TEXT (100));");
+        };
+        require_once "rb.php";
+        R::setup('sqlite:'.$local_db_sqlite['db_src']);
+        if(R::testConnection()){echo "DB Bor";}else{ echo "DB Yuq";};
+    };
+};
+
+function db_mysql(){
+    global $db_mysql;
+    if($db_mysql['status']){
+        require_once "rb.php";
+        R::setup('mysql:host='.$db_mysql["host"].';dbname='.$db_mysql["db_name"].'', $db_mysql["login"], $db_mysql["password"]);
+        if(R::testConnection()){echo "Global DB Bor";}else{ echo "Global DB Yuq";};
+    };
 };
