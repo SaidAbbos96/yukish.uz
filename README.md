@@ -1,0 +1,1 @@
+yukish.uz loyihachasi docs kn yozamiz
