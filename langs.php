@@ -1,0 +1,81 @@
+<? 
+$words = [
+    "hi_text" => "Elon qoldirish uchun barcha kerakli ma'lumotlar kiritilgach <b>'Elon berish'</b> tugmasini bosing !\nSavol yoki reklama masalasida /faq buyrug'i orqali murojat qoldiring !\n<code>📍 Hududni tanlang: (Qayerdan ?) </code> 👇",
+    "two_step" => "<code>📍 Manzilni tanlang: (Qayerga ?) </code> 👇",
+    "regions" => [
+        "Andijon",
+        "Buxoro",
+        "Jizzax",
+        "Navoiy",
+        "Namangan",
+        "Samarqand",
+        "Sirdaryo",
+        "Surxondaryo",
+        "Toshkent Sh.",
+        "Toshkent",
+        "Farg'ona",
+        "Xorazm",
+        "Qashqadaryo",
+        "Qoraqalpog'iston"
+    ],
+    "zones" => [
+        ["Andijon sh.","Andijon t.","Asaka t.","Baliqchi t.","Bo`z t.","Buloqboshi t.","Izboskan t.","Jalaquduq t.","Marxamat t.","Oltinko`l t.","Paxtaobod t.","Qo`rg`ontepa t.","Qorasuv sh.","Shahrixon t.","Ulug`nor t.","Xo`jaobod t.","Xonobod sh."],
+        ["Buxoro sh.","Buxoro t.","G`ijduvon t.","Jondor t.","Kogon sh.","Kogon t.","Olot t.","Peshku t.","Qorako`l t.","Qoravulbozor t.","Romitan t.","Shofirkon t.","Vobkent t."],
+        ["Jizzax sh.","Arnasoy t.","Baxmal t.","Do`stlik t.","Forish t.","G`allaorol t.","Jizzax t.","Mirzacho`l t.","Paxtakor t.","Yangiobod t.","Zafarobod t.","Zarbdor t.","Zomin t."],
+        ["Karmana t.","Konimex t.","Navbahor t.","Navoiy sh.","Nurota t.","Qiziltepa t.","Tomdi t.","Uchquduq t.","Xatirchi t.","Zarafshon sh."],
+        ["Namangan sh.","Namangan t.","To`raqo`rg`on t.","Chust t.","Pop t.","Kosonsoy t.","Chortoq t.","Yangiqo`rg`on t.","Uychi t.","Uchqo`rg`on t.","Norin t.","Mingbuloq t."],
+        ["Bulung`ur t.","Ishtixon t.","Jomboy t.","Kattaqo`rg`on t.","Narpay t.","Nurobod t.","Oqdaryo t.","Pastdarg`om t.","Paxtachi t.","Payariq t.","Qo`shrabot t.","Samarqand t.", "Samarqand sh.", "Tayloq t.", "Urgut t."],
+        ["Boyovut t.","Guliston sh.","Guliston t.","Mirzaobod t.","Oqoltin t.","Sardoba t.","Sayhunobod t.","Shirin sh.","Sirdaryo t.","Xovos t.","Yangiyer sh."],
+        ["Angor t.","Boysun t.","Denov t.","Jarqo`rg`on t.","Muzrabot t.","Oltinsoy t.","Qiziriq t.","Qumqo`rg`on t.","Sariosiyo t.","Sherobod t.","Sho`rchi t.","Termiz sh.","Termiz t.","Uzun t."],
+        ["Bektemir t.","Mirzo-Ulug`bek t.","Yunusobod t.","Yakkasaroy t.","Shayxontohur t.","Chilonzor t.","Sergeli t.","Yashnobod t.","Olmazor t.","Uchtepa t.","Mirobod t."],
+        ["Angren sh.","Bekobod sh.","Olmaliq sh.","Chirchiq sh.","Bekobod t.","Bo`ka t.","Bo`stonliq t.","Zangiota t.","Ohangaron t.","Oqqo`rg`on t.","Piskent t.","Parkent t.","Chinoz t.","O`rtachirchiq t.","Quyichirchiq t.","Qibray t.","Yuqorichirchiq t.","Yangiyo`l t."],
+        ["Beshariq t.","Bog`dod t.","Buvayda t.","Dang`ara t.","Farg`ona sh.","Furqat t.","Farg`ona t.","Marg`ilon sh.","Oltiariq t.","O`zbekiston t.","Qo`qon sh.","Qo`shtepa t.","Quvasoy sh.","Quva t.","Rishton t.","So`x t.","Toshloq t.","Uchko`prik t.","Yozyovon t."],
+        ["Bog`ot t.","Gurlan t.","Qo`shko`pir t.","Shovot t.","Urganch sh.","Urganch t.","Yangibozor t.","Yangiariq t.","Xiva t.","Xazorasp t.","Xonqa t."],
+        ["Dehqonobod t.","G`uzor t.","Kasbi t.","Kitob t.","Koson t.","Mirishkor t.","Muborak t.","Nishon t.","Qamashi t.","Qarshi sh.","Qarshi t.","Shahrisabz t.","Yakkabog` t."],
+        ["Nukus t.","Nukus sh.","Mo`ynoq t.","Kegayli t.","Ellikqal`a t.","Chimbay t.","Beruniy t.","Amudaryo t.","Qo`ng`irot t.","Qonliko`l t.","Qorao`zak t.","Shumanay t.","Taxiyatosh sh.","Taxtako`pir t.","To`rtko`l t.","Xo`jayli t."]
+    ],
+    "prev_text" => "❎ Bekor qilish ❎",
+    "del_post" => "❌ O'chirish ❌",
+    "run_post" => "✅ E'lon qilish ✅",
+    "check_post" => "Elon qilish 📣",
+    "sts_templates" => ["",
+        "Tahrirda 📝",
+        "Kutush holatida ⏳",
+        "Bajarilmoqda ⏱",
+        "Bajarildi ✅",
+        "Aktiv 📣"
+    ],
+    "types_text" => "<code>Talab etilayotgan xizmat toifasini tanlang:</code> 👇",
+    "types" => [
+        "🚕 Yengil mashina",
+        "🚙 1 Tonnagacha",
+        "🚐 5 Tonnagacha",
+        "🚚 10 Tonnagacha",
+        "🚛 30 Tonnagacha",
+        "🧱 60 Tonnagacha"
+    ],
+    "q_steps" => [
+        "Telefon raqamingizni kiriting: (991234567)",
+        "Taxminiy narxni kiriting (35000 sum) yoki (Kelishilgan)",
+        "Elon kartasiga qo'shimcha sifatida istalgan matn yoki fikrni kiriting !"
+    ],
+    "post_baza" => [
+        "Transport xizmati:",
+        "Ish Holati:",
+        "Qayerdan:",
+        "Qayergacha:",
+        "Xizmat Narxi:",
+        "Yuk Vazni:",
+        "Telefon:",
+        "Manzil:",
+        "Qo'shimcha Ma'lumot:"
+    ],
+    "fast_text" => "#Shoshilinch",
+    "new_post_btn" => "🆕 Yangi elon yaratish 📝",
+    "succ_del_post" => "🔥 Elon o'chirildi, yangi elon joylashtirish uchun /new buyrug'ini yuboring !",
+    "succ_post" => "✅ Elon yakunlandi, yangi elon joylashtirish uchun /new buyrug'ini yuboring !",
+    "succ_del_post_admin" => "🔥 Elon o'chirildi !",
+    "warr_del_post_admin" => "🔥 Sizning e'loningiz admin tomonidan o'chirildi !\nYangi elon yaratish uchun /new tugmasini bosing !",
+    "faq" => "Murojat qoldiring, kordinatorlar qisqa vaqt ichida murojat yo'llashadi !",
+    "faq_succ" => "Sizning murojatingiz qabul qilindi, murojat raqami: "
+];
